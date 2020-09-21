@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import EventDashboard from '../../features/events/eventDashboard/EventDashboard';
@@ -9,18 +8,6 @@ import HomePage from '../../features/home/HomePage';
 import NavBar from '../../features/navbar/NavBar';
 
 function App() {
-  const [formOpen, setFormOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-
-  function handleSelectedEvent(event) {
-    setSelectedEvent(event);
-    setFormOpen(true);
-  }
-
-  function handleCreateFormOpen() {
-    setSelectedEvent(null);
-    setFormOpen(true);
-  }
   return (
     <>
       <Route exact path="/" component={HomePage} />
@@ -28,11 +15,14 @@ function App() {
         path={'/(.+)'} // Anything that's got a after / + '', then route render differently
         render={() => (
           <>
-            <NavBar setFormOpen={handleCreateFormOpen} />
+            <NavBar />
             <Container className="main">
               <Route exact path="/events" component={EventDashboard} />
               <Route path="/events/:id" component={EventDetailedPage} />
-              <Route path="/createEvent" component={EventForm} />
+              <Route
+                path={['/createEvent', '/manage/:id']}
+                component={EventForm}
+              />
             </Container>
           </>
         )}
