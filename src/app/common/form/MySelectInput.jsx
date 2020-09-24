@@ -1,6 +1,6 @@
 import React from 'react';
 import { useField } from 'formik';
-import { FormField, Label, Select, TextArea } from 'semantic-ui-react';
+import { FormField, Label, Select } from 'semantic-ui-react';
 
 export default function MySelectInput({ label, ...props }) {
   const [field, meta, helpers] = useField(props);
