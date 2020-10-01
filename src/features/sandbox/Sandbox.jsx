@@ -4,11 +4,13 @@ import { Button } from 'semantic-ui-react';
 import { increment, decrement } from './testReducer';
 import { openModal } from './../../app/common/modals/modalReducer';
 import TestPlaceInput from './TestPlaceInput.jsx';
-import TestMap from './testMap';
+import TestMap from './TestMap';
 
 export default function Sandbox() {
   const dispatch = useDispatch();
+  const [target, setTarget] = useState(null);
   const data = useSelector((state) => state.test.data);
+  const { loading } = useSelector((state) => state.async);
   const defaultProps = {
     center: {
       lat: 59.95,
@@ -27,12 +29,22 @@ export default function Sandbox() {
       <h1>Testing Sandbox</h1>
       <h1>Data : {data}</h1>
       <Button
-        onClick={() => dispatch(increment(20))}
+        name="increment"
+        loading={loading && target === 'increment'}
+        onClick={(e) => {
+          dispatch(increment(20));
+          setTarget(e.target.name);
+        }}
         content="Increment"
         color="green"
       />
       <Button
-        onClick={() => dispatch(decrement(10))}
+        name="decrement"
+        loading={loading && target === 'decrement'}
+        onClick={(e) => {
+          dispatch(decrement(10));
+          setTarget(e.target.name);
+        }}
         content="Decrement"
         color="red"
       />{' '}
